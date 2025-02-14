@@ -16,13 +16,13 @@ importers:
         version: 5.66.0(react@19.0.0)
       '@trpc/client':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.764(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(typescript@5.7.3)
+        version: 11.0.0-rc.768(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(typescript@5.7.3)
       '@trpc/react-query':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.764(@tanstack/react-query@5.66.0(react@19.0.0))(@trpc/client@11.0.0-rc.764(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(typescript@5.7.3))(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
+        version: 11.0.0-rc.768(@tanstack/react-query@5.66.0(react@19.0.0))(@trpc/client@11.0.0-rc.768(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(typescript@5.7.3))(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
       '@trpc/server':
         specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.764(typescript@5.7.3)
+        version: 11.0.0-rc.768(typescript@5.7.3)
       drizzle-orm:
         specifier: ^0.39.3
         version: 0.39.3(postgres@3.4.5)
@@ -51,6 +51,9 @@ importers:
         specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.2.0
+        version: 3.2.0
       '@stylistic/eslint-plugin':
         specifier: ^3.1.0
         version: 3.1.0(eslint@9.20.1(jiti@1.21.7))(typescript@5.7.3)
@@ -87,12 +90,6 @@ importers:
       postcss:
         specifier: ^8.5.2
         version: 8.5.2
-      prettier:
-        specifier: ^3.5.1
-        version: 3.5.1
-      prettier-plugin-tailwindcss:
-        specifier: ^0.6.11
-        version: 0.6.11(prettier@3.5.1)
       tailwindcss:
         specifier: ^3.4.3
         version: 3.4.17
@@ -703,24 +700,24 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@trpc/client@11.0.0-rc.764':
-    resolution: {integrity: sha512-6NXnOm5c4U3CYqaIzZ9YHqwyEpGj8aMVpY7jvUwvpJjX11n1j52YbwqoeuUpz1JJzYw6g23PFORD4JQanqQntQ==}
+  '@trpc/client@11.0.0-rc.768':
+    resolution: {integrity: sha512-eZNNjQQhP6nsr1tniI/84P1SKyh6BjvKNMq0vXKnKFV57El27XTfn6wfmdLNcyL3f24ZmDxm/sMxXlzM+zaG/g==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.764+71c7ccc49
+      '@trpc/server': 11.0.0-rc.768+de6335c47
       typescript: '>=5.7.2'
 
-  '@trpc/react-query@11.0.0-rc.764':
-    resolution: {integrity: sha512-tl84JuhHqo+EvJ7uzJTCemIBH9qv7VUbBIJwKSGpj0zRwoQdkh3l8EIn5Kb16N2/+Hkilfc34MPSmB91VrfPNg==}
+  '@trpc/react-query@11.0.0-rc.768':
+    resolution: {integrity: sha512-9ATcL+jq1dQMDA+Egf0BHx8bf0/2t2Ng+3x338N+y9BvYvxa20vXtlZzv9IogXjaC8dUdKsGCu5MqGy9XaPnmA==}
     peerDependencies:
       '@tanstack/react-query': ^5.62.8
-      '@trpc/client': 11.0.0-rc.764+71c7ccc49
-      '@trpc/server': 11.0.0-rc.764+71c7ccc49
+      '@trpc/client': 11.0.0-rc.768+de6335c47
+      '@trpc/server': 11.0.0-rc.768+de6335c47
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.0.0-rc.764':
-    resolution: {integrity: sha512-fwU5Oowk0d7qD4nB29Fv54FGDp2JlxJcRLJUSBmXIYCK66BlwHUcaB6lzrwy6Weqlc9nt+U5j/WsooWcFDam7A==}
+  '@trpc/server@11.0.0-rc.768':
+    resolution: {integrity: sha512-+2du6a3uZEcQBj1OdT6EfWxa6dw/vqBG37aNR7YReTJ/UOMnheOmI/bskHkbK+x/kAcHPj8YN+/xc01QJDxwXQ==}
     peerDependencies:
       typescript: '>=5.7.2'
 
@@ -1882,66 +1879,6 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-tailwindcss@0.6.11:
-    resolution: {integrity: sha512-YxaYSIvZPAqhrrEpRtonnrXdghZg1irNg4qrjboCXrpybLWVs55cW2N3juhspVJiO0JBvYJT8SYsJpc8OQSnsA==}
-    engines: {node: '>=14.21.3'}
-    peerDependencies:
-      '@ianvs/prettier-plugin-sort-imports': '*'
-      '@prettier/plugin-pug': '*'
-      '@shopify/prettier-plugin-liquid': '*'
-      '@trivago/prettier-plugin-sort-imports': '*'
-      '@zackad/prettier-plugin-twig': '*'
-      prettier: ^3.0
-      prettier-plugin-astro: '*'
-      prettier-plugin-css-order: '*'
-      prettier-plugin-import-sort: '*'
-      prettier-plugin-jsdoc: '*'
-      prettier-plugin-marko: '*'
-      prettier-plugin-multiline-arrays: '*'
-      prettier-plugin-organize-attributes: '*'
-      prettier-plugin-organize-imports: '*'
-      prettier-plugin-sort-imports: '*'
-      prettier-plugin-style-order: '*'
-      prettier-plugin-svelte: '*'
-    peerDependenciesMeta:
-      '@ianvs/prettier-plugin-sort-imports':
-        optional: true
-      '@prettier/plugin-pug':
-        optional: true
-      '@shopify/prettier-plugin-liquid':
-        optional: true
-      '@trivago/prettier-plugin-sort-imports':
-        optional: true
-      '@zackad/prettier-plugin-twig':
-        optional: true
-      prettier-plugin-astro:
-        optional: true
-      prettier-plugin-css-order:
-        optional: true
-      prettier-plugin-import-sort:
-        optional: true
-      prettier-plugin-jsdoc:
-        optional: true
-      prettier-plugin-marko:
-        optional: true
-      prettier-plugin-multiline-arrays:
-        optional: true
-      prettier-plugin-organize-attributes:
-        optional: true
-      prettier-plugin-organize-imports:
-        optional: true
-      prettier-plugin-sort-imports:
-        optional: true
-      prettier-plugin-style-order:
-        optional: true
-      prettier-plugin-svelte:
-        optional: true
-
-  prettier@3.5.1:
-    resolution: {integrity: sha512-hPpFQvHwL3Qv5AdRvBFMhnKo4tYxp0ReXiPn2bxkiohEX6mBeBwEpBSQTkD458RaaDKQMYSp4hX4UtfUTA5wDw==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
@@ -2693,21 +2630,21 @@ snapshots:
       '@tanstack/query-core': 5.66.0
       react: 19.0.0
 
-  '@trpc/client@11.0.0-rc.764(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(typescript@5.7.3)':
+  '@trpc/client@11.0.0-rc.768(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(typescript@5.7.3)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.764(typescript@5.7.3)
+      '@trpc/server': 11.0.0-rc.768(typescript@5.7.3)
       typescript: 5.7.3
 
-  '@trpc/react-query@11.0.0-rc.764(@tanstack/react-query@5.66.0(react@19.0.0))(@trpc/client@11.0.0-rc.764(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(typescript@5.7.3))(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)':
+  '@trpc/react-query@11.0.0-rc.768(@tanstack/react-query@5.66.0(react@19.0.0))(@trpc/client@11.0.0-rc.768(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(typescript@5.7.3))(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)':
     dependencies:
       '@tanstack/react-query': 5.66.0(react@19.0.0)
-      '@trpc/client': 11.0.0-rc.764(@trpc/server@11.0.0-rc.764(typescript@5.7.3))(typescript@5.7.3)
-      '@trpc/server': 11.0.0-rc.764(typescript@5.7.3)
+      '@trpc/client': 11.0.0-rc.768(@trpc/server@11.0.0-rc.768(typescript@5.7.3))(typescript@5.7.3)
+      '@trpc/server': 11.0.0-rc.768(typescript@5.7.3)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       typescript: 5.7.3
 
-  '@trpc/server@11.0.0-rc.764(typescript@5.7.3)':
+  '@trpc/server@11.0.0-rc.768(typescript@5.7.3)':
     dependencies:
       typescript: 5.7.3
 
@@ -4032,12 +3969,6 @@ snapshots:
   postgres@3.4.5: {}
 
   prelude-ls@1.2.1: {}
-
-  prettier-plugin-tailwindcss@0.6.11(prettier@3.5.1):
-    dependencies:
-      prettier: 3.5.1
-
-  prettier@3.5.1: {}
 
   prop-types@15.8.1:
     dependencies:
