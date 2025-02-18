@@ -4,72 +4,72 @@ import { api } from "@/trpc/react";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 import { formatRupiah } from "@/lib/utils/format";
-import { useState } from "react";
 
 export default function Dashboard() {
   const { data: user } = api.session.read.useQuery();
   const { data: stats, isLoading } = api.dashboard.stats.useQuery();
-  const [activeTab, setActiveTab] = useState("overview");
 
   if (isLoading) return <div>Loading...</div>;
 
+  const statCards = [
+    {
+      title: "Total Transaksi",
+      value: stats?.totalTransactions ?? 0,
+      format: (val: number) => val.toString()
+    },
+    {
+      title: "Total Pendapatan",
+      value: stats?.totalRevenue ?? 0,
+      format: formatRupiah
+    },
+    {
+      title: "Total Pelanggan",
+      value: stats?.totalCustomers ?? 0,
+      format: (val: number) => val.toString()
+    },
+    {
+      title: "Total Produk",
+      value: stats?.totalProducts ?? 0,
+      format: (val: number) => val.toString()
+    },
+    {
+      title: "Total Stok",
+      value: stats?.totalStock ?? 0,
+      format: (val: number) => val.toString()
+    },
+    {
+      title: "Total Pengguna",
+      value: stats?.totalUsers ?? 0,
+      format: (val: number) => val.toString()
+    }
+  ];
+
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      {/* Header Section */}
+      {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <p>
-          Halo,
-          {user?.name}
-          !
-        </p>
+        <p className="text-gray-600">Selamat datang, {user?.name}!</p>
       </div>
 
-      {/* Quick Stats */}
+      {/* Stat Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-sm font-medium text-gray-500">Total Users</h3>
-          <div className="mt-2">
-            <span className="text-2xl font-bold text-gray-800">
-              {stats?.totalUsers ?? 0}
-            </span>
+        {statCards.map((stat, index) => (
+          <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <h3 className="text-sm font-medium text-gray-500">{stat.title}</h3>
+            <div className="mt-2">
+              <span className="text-2xl font-bold text-gray-800">
+                {stat.format(stat.value)}
+              </span>
+            </div>
           </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-sm font-medium text-gray-500">Total Revenue</h3>
-          <div className="mt-2">
-            <span className="text-2xl font-bold text-gray-800">
-              {formatRupiah(stats?.totalRevenue ?? 0)}
-            </span>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-sm font-medium text-gray-500">Total Produk</h3>
-          <div className="mt-2">
-            <span className="text-2xl font-bold text-gray-800">
-              {stats?.totalProducts ?? 0}
-            </span>
-          </div>
-        </div>
+        ))}
       </div>
 
-      {/* Main Content Tabs */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div className="border-b border-gray-100">
-          <nav className="flex">
-            <button
-              onClick={() => setActiveTab("overview")}
-              className={`px-6 py-4 text-sm font-medium ${activeTab === "overview" ? "text-pink-600 border-b-2 border-pink-600" : "text-gray-500"}`}
-            >
-              Overview
-            </button>
-            <button
-              onClick={() => setActiveTab("users")}
-              className={`px-6 py-4 text-sm font-medium ${activeTab === "users" ? "text-pink-600 border-b-2 border-pink-600" : "text-gray-500"}`}
-            >
-              Users
+      {/* Recent Transactions & Low Stock Products */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Recent Transactions */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             </button>
             <button
               onClick={() => setActiveTab("products")}
