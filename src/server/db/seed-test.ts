@@ -1,38 +1,49 @@
 import { db } from "./index";
 import { products } from "./schema";
+import { sql } from "drizzle-orm";
+
+const dummyProducts = [
+  {
+    namaProduk: "Kaos Basic Hitam",
+    hargaProduk: 99000,
+    stock: 50,
+    imageUrl: "https://i.imgur.com/jEGhqEz.jpg"
+  },
+  {
+    namaProduk: "Celana Cargo",
+    hargaProduk: 199000,
+    stock: 30,
+    imageUrl: "https://i.imgur.com/xDjYdVx.jpg"
+  },
+  {
+    namaProduk: "Hoodie Abu-abu",
+    hargaProduk: 249000,
+    stock: 25,
+    imageUrl: "https://i.imgur.com/L5IQmbe.jpg"
+  }
+];
 
 async function main() {
   try {
-    const testProducts = [
-      {
-        namaProduk: "Kaos Hitam",
-        hargaProduk: 50000,
-        stock: 10
-      },
-      {
-        namaProduk: "Celana Jeans",
-        hargaProduk: 150000,
-        stock: 5
-      },
-      {
-        namaProduk: "Kemeja Putih",
-        hargaProduk: 100000,
-        stock: 8
-      }
-    ];
+    // Hapus semua data produk yang ada
+    await db.delete(products);
+    console.log("Data produk lama dihapus");
 
-    console.log("Menambahkan data test...");
-
-    for (const product of testProducts) {
+    // Masukkan data baru satu per satu
+    for (const product of dummyProducts) {
       await db.insert(products).values(product);
+      console.log(`Berhasil menambah: ${product.namaProduk}`);
     }
 
-    console.log("Data test berhasil ditambahkan!");
-  }
-  catch (error) {
+    // Cek jumlah produk yang berhasil ditambahkan
+    const count = await db.select({ count: sql`count(*)::int` }).from(products);
+    console.log(`Total produk sekarang: ${count[0]?.count ?? 0}`);
+
+  } catch (error) {
     console.error("Error:", error);
     process.exit(1);
   }
+  process.exit(0);
 }
 
-main().catch(console.error);
+main();

@@ -45,11 +45,15 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-gray-50 min-h-screen pl-80">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-600">Selamat datang, {user?.name}!</p>
+        <p className="text-gray-600">
+          Selamat datang,
+          {user?.name}
+          !
+        </p>
       </div>
 
       {/* Stat Cards Grid */}
@@ -70,89 +74,63 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Recent Transactions */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            </button>
-            <button
-              onClick={() => setActiveTab("products")}
-              className={`px-6 py-4 text-sm font-medium ${activeTab === "products" ? "text-pink-600 border-b-2 border-pink-600" : "text-gray-500"}`}
-            >
-              Products
-            </button>
-            <button
-              onClick={() => setActiveTab("transactions")}
-              className={`px-6 py-4 text-sm font-medium ${activeTab === "transactions" ? "text-pink-600 border-b-2 border-pink-600" : "text-gray-500"}`}
-            >
-              Transactions
-            </button>
-          </nav>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Transaksi Terbaru</h3>
+          <div className="space-y-4">
+            {stats?.recentTransactions.map(transaction => (
+              <div key={transaction.id} className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <p className="font-medium text-gray-800">
+                      {transaction.pelanggan.nama}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {format(new Date(transaction.tanggalPenjualan), "dd MMMM yyyy, HH:mm", { locale: id })}
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 text-xs font-medium text-pink-600 bg-pink-100 rounded-full">
+                    {formatRupiah(Number(transaction.totalHarga))}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-500">
+                  {transaction.details.map(detail => (
+                    <div key={detail.id} className="flex justify-between">
+                      <span>
+                        {detail.product.namaProduk}
+                        {" "}
+                        x
+                        {" "}
+                        {detail.jumlahProduk}
+                      </span>
+                      <span>{formatRupiah(Number(detail.subTotal))}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="p-6">
-          {activeTab === "overview" && (
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-gray-800">Recent Activity</h3>
-              <div className="space-y-4">
-                {stats?.recentTransactions.map(transaction => (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="text-sm font-medium text-gray-800">
-                        {transaction.pelanggan.nama}
-                        {" "}
-                        -
-                        {formatRupiah(Number(transaction.totalHarga))}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {format(new Date(transaction.tanggalPenjualan), "dd MMMM yyyy, HH:mm", { locale: id })}
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 text-xs font-medium text-pink-600 bg-pink-100 rounded-full">
-                      {transaction.user.name}
-                    </span>
-                  </div>
-                ))}
+        {/* Low Stock Products */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Stok Produk</h3>
+          <div className="space-y-4">
+            {stats?.lowStockProducts.map(product => (
+              <div key={product.id} className="p-4 bg-gray-50 rounded-lg flex justify-between items-center">
+                <div>
+                  <p className="font-medium text-gray-800">{product.namaProduk}</p>
+                  <p className="text-sm text-gray-500">{formatRupiah(Number(product.hargaProduk))}</p>
+                </div>
+                <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                  product.stock <= 5 ? "text-red-600 bg-red-100" : "text-yellow-600 bg-yellow-100"
+                }`}
+                >
+                  Stok:
+                  {" "}
+                  {product.stock}
+                </span>
               </div>
-            </div>
-          )}
-
-          {activeTab === "users" && (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User ID</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {[1, 2, 3].map(i => (
-                    <tr key={i}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        #
-                        {1000 + i}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        User
-                        {i}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Admin</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
-                          Active
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-pink-600 hover:text-pink-800">
-                        <button>Edit</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {/* Add more tab contents as needed */}
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -8,12 +8,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { formatRupiah } from "@/lib/utils/format";
+import Image from "next/image";
 
 interface Product {
   id: number
   namaProduk: string
   hargaProduk: number
   stock: number
+  imageUrl: string
 }
 
 interface CartItem extends Product {
@@ -157,7 +159,7 @@ export default function TransaksiPage() {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-gray-50 min-h-screen pl-80">
       <div className="mb-6 grid grid-cols-2 gap-4">
         <div className="bg-white p-4 rounded-lg shadow">
           <h3 className="text-sm text-gray-500">Transaksi Hari Ini</h3>
@@ -184,18 +186,27 @@ export default function TransaksiPage() {
             {filteredProducts?.map(product => (
               <Card
                 key={product.id}
-                className="p-4 cursor-pointer hover:shadow-md transition-shadow"
+                className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
                 onClick={() => addToCart(product)}
               >
-                <h3 className="font-semibold">{product.namaProduk}</h3>
-                <p className="text-sm text-gray-600">
-                  {formatRupiah(product.hargaProduk)}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Stok:
-                  {" "}
-                  {product.stock}
-                </p>
+                <div className="relative aspect-square">
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.namaProduk}
+                    fill
+                    className="object-cover"
+                    priority
+                    unoptimized
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold truncate">{product.namaProduk}</h3>
+                  <p className="text-sm text-gray-600">{formatRupiah(product.hargaProduk)}</p>
+                  <p className="text-sm text-gray-500">
+                    Stok:
+                    {product.stock}
+                  </p>
+                </div>
               </Card>
             ))}
           </div>

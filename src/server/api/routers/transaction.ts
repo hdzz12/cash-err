@@ -97,7 +97,12 @@ export const transactionRouter = createTRPCRouter({
     return await ctx.db.query.penjualan.findMany({
       with: {
         pelanggan: true,
-        user: true
+        user: true,
+        details: {
+          with: {
+            product: true
+          }
+        }
       },
       orderBy: [desc(penjualan.tanggalPenjualan)]
     });

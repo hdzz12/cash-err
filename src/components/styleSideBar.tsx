@@ -32,10 +32,10 @@ const StyleSideBar = () => {
   }
 
   return (
-    <div className="h-screen w-72 bg-white flex flex-col shadow-sm border-r border-gray-100">
+    <div className="h-screen w-72 bg-white flex flex-col shadow-sm border-r border-gray-100 fixed top-0 left-0 z-10">
       <div className="p-6">
         <span className="text-xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-          Cash-Er
+          Daster Bordir Cantik
         </span>
       </div>
 
@@ -43,6 +43,7 @@ const StyleSideBar = () => {
         <ul className="space-y-1">
           <MenuItem text="Beranda" href="/dashboard/beranda" />
           <MenuItem text="Manajemen Pengguna" href="/dashboard/manajemen" />
+          <MenuItem text="Data Produk" href="/dashboard/" />
           <MenuItem text="Transaksi" href="/dashboard/transaksi" />
           <MenuItem text="Riwayat" href="/dashboard/riwayat" />
         </ul>

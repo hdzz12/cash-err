@@ -3,7 +3,7 @@ import StyleSideBar from "@/components/styleSideBar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <StyleSideBar />
       <div className="flex-1">
         {children}

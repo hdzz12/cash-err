@@ -50,6 +50,20 @@
       "when": 1739867184570,
       "tag": "0006_nosy_agent_zero",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1739874196324,
+      "tag": "0007_modern_captain_flint",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1739877169078,
+      "tag": "0008_closed_luckman",
+      "breakpoints": true
     }
   ]
 }

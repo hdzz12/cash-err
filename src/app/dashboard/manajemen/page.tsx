@@ -110,7 +110,7 @@ export default function Manajemen() {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-gray-50 min-h-screen pl-80">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-800">Manajemen Pengguna</h1>
         <Button onClick={() => setIsOpen(true)}>Tambah Pengguna</Button>

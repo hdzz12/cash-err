@@ -30,10 +30,9 @@ export const dashboardRouter = createTRPCRouter({
       .select({ count: sql<number>`cast(count(*) as integer)` })
       .from(pelanggan);
 
-    // Get recent transactions with relations
+    // Get recent transactions with full relations
     const recentTransactions = await ctx.db.query.penjualan.findMany({
       limit: 5,
-      orderBy: [desc(penjualan.tanggalPenjualan)],
       with: {
         pelanggan: true,
         user: true,
@@ -42,15 +41,22 @@ export const dashboardRouter = createTRPCRouter({
             product: true
           }
         }
-      }
+      },
+      orderBy: [desc(penjualan.tanggalPenjualan)]
     });
 
-    // Get low stock products (stock < 10)
-    const lowStockProducts = await ctx.db
-      .select()
-      .from(products)
-      .where(sql`${products.stock} < 10`)
-      .limit(5);
+    // Get low stock products with related transaction details
+    const lowStockProducts = await ctx.db.query.products.findMany({
+      where: sql`${products.stock} < 10`,
+      with: {
+        detailList: {
+          with: {
+            penjualan: true
+          }
+        }
+      },
+      limit: 5
+    });
 
     return {
       totalUsers: totalUsers[0]?.count ?? 0,

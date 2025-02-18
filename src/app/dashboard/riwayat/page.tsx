@@ -32,7 +32,7 @@ export default function RiwayatPage() {
     : transactions;
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-gray-50 min-h-screen pl-80">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Riwayat Transaksi</h1>
         <Input

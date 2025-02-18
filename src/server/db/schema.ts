@@ -11,7 +11,7 @@ export const users = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity().notNull(),
   name: varchar({ length: 255 }).notNull(),
   username: varchar({ length: 50 }).notNull(),
-  password: varchar().notNull(),
+  password: text().notNull(),
   level: userLevels().notNull().default("user"),
   passwordUpdatedAt: timestamp({ withTimezone: true })
 
@@ -48,11 +48,17 @@ export const products = pgTable("products", {
   id: integer().primaryKey().generatedAlwaysAsIdentity().notNull(),
   namaProduk: varchar({ length: 255 }).notNull(),
   hargaProduk: decimal({ precision: 10, scale: 2 }).notNull(),
-  stock: integer().notNull()
+  stock: integer().notNull(),
+  imageUrl: text().default("https://i.imgur.com/placeholder.jpg").notNull() // tambah field image
 });
 
-// Tambahkan relations
-export const penjualanRelations = relations(penjualan, ({ one }) => ({
+// Definisi relasi untuk users
+export const usersRelations = relations(users, ({ many }) => ({
+  penjualanList: many(penjualan)
+}));
+
+// Definisi relasi untuk penjualan
+export const penjualanRelations = relations(penjualan, ({ one, many }) => ({
   pelanggan: one(pelanggan, {
     fields: [penjualan.pelanganID],
     references: [pelanggan.id]
@@ -60,9 +66,11 @@ export const penjualanRelations = relations(penjualan, ({ one }) => ({
   user: one(users, {
     fields: [penjualan.userID],
     references: [users.id]
-  })
+  }),
+  details: many(detailPenjualan)
 }));
 
+// Definisi relasi untuk detail penjualan
 export const detailPenjualanRelations = relations(detailPenjualan, ({ one }) => ({
   penjualan: one(penjualan, {
     fields: [detailPenjualan.detailID],
@@ -72,4 +80,14 @@ export const detailPenjualanRelations = relations(detailPenjualan, ({ one }) => 
     fields: [detailPenjualan.produkID],
     references: [products.id]
   })
+}));
+
+// Definisi relasi untuk products
+export const productsRelations = relations(products, ({ many }) => ({
+  detailList: many(detailPenjualan)
+}));
+
+// Definisi relasi untuk pelanggan
+export const pelangganRelations = relations(pelanggan, ({ many }) => ({
+  penjualanList: many(penjualan)
 }));

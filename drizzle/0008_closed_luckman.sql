@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "imageUrl" text DEFAULT 'https://placehold.co/200x200' NOT NULL;
