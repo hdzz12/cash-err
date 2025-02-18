@@ -1,0 +1,1 @@
+ALTER TABLE "products" ALTER COLUMN "imageUrl" SET DEFAULT 'https://i.imgur.com/placeholder.jpg';

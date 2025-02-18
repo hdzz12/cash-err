@@ -9,6 +9,7 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { formatRupiah } from "@/lib/utils/format";
 import Image from "next/image";
+import { LoadingState } from "@/components/loading-state";
 
 interface Product {
   id: number
@@ -37,6 +38,8 @@ export default function TransaksiPage() {
       totalRevenue: 0
     }
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const { mutate: createTransaction } = api.transaction.create.useMutation({
     onSuccess: () => {
@@ -157,6 +160,10 @@ export default function TransaksiPage() {
       toast.error("Gagal memproses transaksi");
     }
   };
+
+  if (isLoading) {
+    return <LoadingState title="Memuat transaksi..." skeletonCount={6} />;
+  }
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen pl-80">

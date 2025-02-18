@@ -1,9 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from "@/components/ui/alert-dialog";
 
 const MenuItem = ({ text, href }: { text: string, href: string }) => (
   <li>
@@ -14,6 +24,7 @@ const MenuItem = ({ text, href }: { text: string, href: string }) => (
 );
 
 const StyleSideBar = () => {
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const session = api.session.read.useQuery(undefined, {
     retry: false,
     staleTime: 1 * 60 * 1000,
@@ -43,6 +54,7 @@ const StyleSideBar = () => {
         <ul className="space-y-1">
           <MenuItem text="Beranda" href="/dashboard/beranda" />
           <MenuItem text="Manajemen Pengguna" href="/dashboard/manajemen" />
+          <MenuItem text="Data Member" href="/dashboard/member" />
           <MenuItem text="Data Produk" href="/dashboard/" />
           <MenuItem text="Transaksi" href="/dashboard/transaksi" />
           <MenuItem text="Riwayat" href="/dashboard/riwayat" />
@@ -51,14 +63,35 @@ const StyleSideBar = () => {
 
       <div className="p-4 mt-auto">
         <button
-          onClick={() => {
-            logout.mutate();
-          }}
-          className="w-full p-3 text-gray-700 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all duration-200 font-medium"
+          onClick={() => setShowLogoutDialog(true)}
+          className="w-full p-3 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 font-medium"
         >
           Logout
         </button>
       </div>
+
+      <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Keluar</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin keluar?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-gray-700 hover:bg-red-600 transition-colors"
+              onClick={() => {
+                logout.mutate();
+                setShowLogoutDialog(false);
+              }}
+            >
+              Keluar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

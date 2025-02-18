@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
+import { LoadingState } from "@/components/loading-state";
 
 export default function Manajemen() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Manajemen() {
   });
 
   const utils = api.useContext();
-  const { data: users } = api.user.list.useQuery();
+  const { data: users, isLoading } = api.user.list.useQuery();
 
   const { mutate: createUser } = api.user.create.useMutation({
     onSuccess: () => {
@@ -109,6 +110,10 @@ export default function Manajemen() {
     }
   };
 
+  if (isLoading) {
+    return <LoadingState title="Memuat data pengguna..." skeletonCount={4} />;
+  }
+
   return (
     <div className="p-8 bg-gray-50 min-h-screen pl-80">
       <div className="mb-8 flex justify-between items-center">
@@ -120,19 +125,19 @@ export default function Manajemen() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nama</TableHead>
-              <TableHead>Username</TableHead>
-              <TableHead>Level</TableHead>
-              <TableHead>Aksi</TableHead>
+              <TableHead className="text-center">Nama</TableHead>
+              <TableHead className="text-center">Username</TableHead>
+              <TableHead className="text-center">Level</TableHead>
+              <TableHead className="text-center">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users?.map(user => (
               <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.level}</TableCell>
-                <TableCell className="space-x-2">
+                <TableCell className="text-center">{user.name}</TableCell>
+                <TableCell className="text-center">{user.username}</TableCell>
+                <TableCell className="text-center">{user.level}</TableCell>
+                <TableCell className="space-x-2 text-center">
                   <Button
                     variant="secondary"
                     size="sm"

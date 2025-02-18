@@ -4,13 +4,15 @@ import { userRouter } from "./routers/user";
 import { productRouter } from "./routers/product";
 import { transactionRouter } from "./routers/transaction";
 import { dashboardRouter } from "./routers/dashboard";
+import { memberRouter } from "./routers/member";
 
 export const appRouter = createTRPCRouter({
   session: sessionsRouter,
   user: userRouter,
   product: productRouter,
   transaction: transactionRouter,
-  dashboard: dashboardRouter
+  dashboard: dashboardRouter,
+  member: memberRouter
 });
 
 // export type definition of API

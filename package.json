@@ -25,7 +25,9 @@
     "@hookform/resolvers": "^4.1.0",
     "@mui/material": "^6.4.4",
     "@node-rs/argon2": "^2.0.2",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
@@ -36,6 +38,7 @@
     "@trpc/client": "^11.0.0-rc.446",
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
+    "@vercel/postgres": "^0.10.0",
     "add": "^2.0.6",
     "card": "link:@/components/ui/card",
     "class-variance-authority": "^0.7.1",
@@ -61,6 +64,7 @@
     "table": "link:@/components/ui/table",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "vercel": "^41.1.4",
     "zod": "^3.24.2"
   },
   "devDependencies": {
