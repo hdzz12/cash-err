@@ -9,50 +9,49 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { LoadingState } from "@/components/loading-state";
 
-export default function Member() {
+export default function Pelanggan() {
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean, userId: number | null }>({
+  const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean, pelangganId: number | null }>({
     isOpen: false,
-    userId: null
+    pelangganId: null
   });
   const [formData, setFormData] = useState({
     id: 0,
-    name: "",
-    username: "",
-    password: "",
-    level: "user" as const
+    nama: "",
+    alamat: "",
+    noTelp: ""
   });
 
   const utils = api.useContext();
-  const { data: users, isLoading } = api.user.list.useQuery();
+  const { data: pelangganList, isLoading } = api.pelanggan.list.useQuery();
 
-  const { mutate: createUser } = api.user.create.useMutation({
+  const { mutate: createPelanggan } = api.pelanggan.create.useMutation({
     onSuccess: () => {
-      toast.success("Berhasil menambah pengguna");
+      toast.success("Berhasil menambah pelanggan");
       handleCloseDialog();
-      utils.user.list.invalidate();
+      utils.pelanggan.list.invalidate();
     },
     onError: (error) => {
       toast.error(error.message);
     }
   });
 
-  const { mutate: updateUser } = api.user.update.useMutation({
+  const { mutate: updatePelanggan } = api.pelanggan.update.useMutation({
     onSuccess: () => {
-      toast.success("Berhasil mengupdate pengguna");
+      toast.success("Berhasil mengupdate pelanggan");
       handleCloseDialog();
-      utils.user.list.invalidate();
+      utils.pelanggan.list.invalidate();
     },
     onError: (error) => {
       toast.error(error.message);
     }
   });
 
-  const { mutate: deleteUser } = api.user.delete.useMutation({
+  const { mutate: deletePelanggan } = api.pelanggan.delete.useMutation({
     onSuccess: () => {
-      toast.success("Berhasil menghapus pengguna");
-      utils.user.list.invalidate();
+      toast.success("Berhasil menghapus pelanggan");
+      utils.pelanggan.list.invalidate();
     },
     onError: (error) => {
       toast.error(error.message);
@@ -64,61 +63,62 @@ export default function Member() {
     setIsEdit(false);
     setFormData({
       id: 0,
-      name: "",
-      username: "",
-      password: "",
-      level: "user"
+      nama: "",
+      alamat: "",
+      noTelp: ""
     });
   };
 
-  const handleEdit = (user: any) => {
+  const handleEdit = (pelanggan: any) => {
     setFormData({
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      password: "",
-      level: user.level
+      id: pelanggan.id,
+      nama: pelanggan.nama,
+      alamat: pelanggan.alamat,
+      noTelp: pelanggan.noTelp
     });
     setIsEdit(true);
     setIsOpen(true);
   };
 
-  const handleDeleteClick = (userId: number) => {
-    setDeleteConfirm({ isOpen: true, userId });
+  const handleDeleteClick = (pelangganId: number) => {
+    setDeleteConfirm({ isOpen: true, pelangganId });
   };
 
   const handleConfirmDelete = () => {
-    if (deleteConfirm.userId) {
-      deleteUser({ id: deleteConfirm.userId });
-      setDeleteConfirm({ isOpen: false, userId: null });
+    if (deleteConfirm.pelangganId) {
+      deletePelanggan({ id: deleteConfirm.pelangganId });
+      setDeleteConfirm({ isOpen: false, pelangganId: null });
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isEdit) {
-      updateUser({
+      updatePelanggan({
         id: formData.id,
-        name: formData.name,
-        username: formData.username,
-        ...(formData.password && { password: formData.password }),
-        level: formData.level
+        nama: formData.nama,
+        alamat: formData.alamat,
+        noTelp: formData.noTelp
       });
     }
     else {
-      createUser(formData);
+      createPelanggan({
+        nama: formData.nama,
+        alamat: formData.alamat,
+        noTelp: formData.noTelp
+      });
     }
   };
 
   if (isLoading) {
-    return <LoadingState title="Memuat data pengguna..." skeletonCount={4} />;
+    return <LoadingState title="Memuat data pelanggan..." skeletonCount={4} />;
   }
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen pl-80">
       <div className="mb-8 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Manajemen Pengguna</h1>
-        <Button onClick={() => setIsOpen(true)}>Tambah Pengguna</Button>
+        <h1 className="text-2xl font-bold text-gray-800">Manajemen Pelanggan</h1>
+        <Button onClick={() => setIsOpen(true)}>Tambah Pelanggan</Button>
       </div>
 
       <div className="bg-white rounded-lg shadow">
@@ -126,29 +126,29 @@ export default function Member() {
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">Nama</TableHead>
-              <TableHead className="text-center">Username</TableHead>
-              <TableHead className="text-center">Level</TableHead>
+              <TableHead className="text-center">Alamat</TableHead>
+              <TableHead className="text-center">No. Telepon</TableHead>
               <TableHead className="text-center">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users?.map(user => (
-              <TableRow key={user.id}>
-                <TableCell className="text-center">{user.name}</TableCell>
-                <TableCell className="text-center">{user.username}</TableCell>
-                <TableCell className="text-center">{user.level}</TableCell>
+            {pelangganList?.map(pelanggan => (
+              <TableRow key={pelanggan.id}>
+                <TableCell className="text-center">{pelanggan.nama}</TableCell>
+                <TableCell className="text-center">{pelanggan.alamat}</TableCell>
+                <TableCell className="text-center">{pelanggan.noTelp}</TableCell>
                 <TableCell className="space-x-2 text-center">
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => handleEdit(user)}
+                    onClick={() => handleEdit(pelanggan)}
                   >
                     Edit
                   </Button>
                   <Button
                     variant="destructive"
                     size="sm"
-                    onClick={() => handleDeleteClick(user.id)}
+                    onClick={() => handleDeleteClick(pelanggan.id)}
                   >
                     Hapus
                   </Button>
@@ -163,45 +163,30 @@ export default function Member() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {isEdit ? "Edit Pengguna" : "Tambah Pengguna"}
+              {isEdit ? "Edit Pelanggan" : "Tambah Pelanggan"}
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label>Nama</label>
               <Input
-                value={formData.name}
-                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                value={formData.nama}
+                onChange={e => setFormData({ ...formData, nama: e.target.value })}
               />
             </div>
             <div>
-              <label>Username</label>
+              <label>Alamat</label>
               <Input
-                value={formData.username}
-                onChange={e => setFormData({ ...formData, username: e.target.value })}
+                value={formData.alamat}
+                onChange={e => setFormData({ ...formData, alamat: e.target.value })}
               />
             </div>
             <div>
-              <label>
-                Password
-                {isEdit && " (Kosongkan jika tidak ingin mengubah)"}
-              </label>
+              <label>No. Telepon</label>
               <Input
-                type="password"
-                value={formData.password}
-                onChange={e => setFormData({ ...formData, password: e.target.value })}
+                value={formData.noTelp}
+                onChange={e => setFormData({ ...formData, noTelp: e.target.value })}
               />
-            </div>
-            <div>
-              <label>Level</label>
-              <select
-                className="w-full border p-2 rounded"
-                value={formData.level}
-                onChange={e => setFormData({ ...formData, level: e.target.value })}
-              >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
             </div>
             <Button type="submit" className="w-full">
               {isEdit ? "Update" : "Simpan"}
@@ -216,12 +201,12 @@ export default function Member() {
             <DialogTitle>Konfirmasi Hapus</DialogTitle>
           </DialogHeader>
           <div className="py-4">
-            <p>Apakah Anda yakin ingin menghapus pengguna ini?</p>
+            <p>Apakah Anda yakin ingin menghapus pelanggan ini?</p>
           </div>
           <div className="flex justify-end space-x-2">
             <Button
               variant="outline"
-              onClick={() => setDeleteConfirm({ isOpen: false, userId: null })}
+              onClick={() => setDeleteConfirm({ isOpen: false, pelangganId: null })}
             >
               Batal
             </Button>

@@ -54,7 +54,7 @@ const StyleSideBar = () => {
         <ul className="space-y-1">
           <MenuItem text="Beranda" href="/dashboard/beranda" />
           <MenuItem text="Manajemen Pengguna" href="/dashboard/manajemen" />
-          <MenuItem text="Data Member" href="/dashboard/member" />
+          <MenuItem text="Data Member" href="/dashboard/pelanggan" />
           <MenuItem text="Data Produk" href="/dashboard/" />
           <MenuItem text="Transaksi" href="/dashboard/transaksi" />
           <MenuItem text="Riwayat" href="/dashboard/riwayat" />
